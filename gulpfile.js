@@ -5,12 +5,10 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('scripts', function () {
-    /*gulp.src('app/scripts/** /*.js')
-        .pipe($.jshint())
-        .pipe($.jshint.reporter(require('jshint-stylish')));*/
     return gulp.src('app/scripts/main.js')
         .pipe($.webpack({
             module: { preLoaders: [ { loader: 'jshint-loader' } ] },
+            jshint: { devel: true },
             output: { filename: "bundle.js" }
         }))
         .pipe($.size())
