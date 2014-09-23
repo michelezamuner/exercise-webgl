@@ -5,6 +5,13 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('scripts', function () {
+    return gulp.src('app/scripts/main.js')
+        .pipe($.webpack({
+            output: {
+                filename: "bundle.js"
+            }
+        }))
+        .pipe(gulp.dest('app/'));
     //return gulp.src('app/scripts/**/*.js')
     //    .pipe($.jshint())
     //    .pipe($.jshint.reporter(require('jshint-stylish')))
