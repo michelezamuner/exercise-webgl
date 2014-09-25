@@ -1,9 +1,20 @@
 'use strict';
 var myfun = require('./myfun.js');
 myfun();
-// commento
 
-var gl = null;
+var Modernizr = window.Modernizr;
+
+if (undefined === Modernizr) {
+  throw 'Modernizr not found!';
+}
+
+if (Modernizr.webgl) {
+  console.log('WebGL Yes!');
+} else {
+  console.log('WebGL No!');
+}
+
+/*var gl = null;
 function getGLContext() {
   var canvas = document.getElementById('canvas-element-id');
   if (canvas === null) {
@@ -26,8 +37,8 @@ function getGLContext() {
   if (gl === null) {
     alert('WebGL is not available');
   } else {
-    alert('Hooray! You got a WebGL context');
+    console.log('Hooray! You got a WebGL context');
   }
 }
 
-window.onload = getGLContext();
+window.onload = getGLContext();*/

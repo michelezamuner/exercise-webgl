@@ -5,6 +5,14 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('scripts', function () {
+    gulp.src('app/scripts/**/*.js')
+        .pipe($.modernizr({
+            options: [ 'html5printshiv' ],
+            tests: [ 'webgl' ]
+        }))
+        .pipe($.size())
+        .pipe(gulp.dest('web/'));
+
     return gulp.src('app/scripts/main.js')
         .pipe($.webpack({
             module: { preLoaders: [ { loader: 'jshint-loader' } ] },
@@ -12,15 +20,20 @@ gulp.task('scripts', function () {
             output: { filename: "bundle.js" }
         }))
         .pipe($.size())
-        .pipe(gulp.dest('app/'));
+        .pipe(gulp.dest('web/'));
+});
+
+gulp.task('html', function() {
+    return gulp.src('app/*.html')
+        .pipe(gulp.dest('web/'));
 });
 
 gulp.task('connect', function () {
     var connect = require('connect');
     var app = connect()
         .use(require('connect-livereload')({ port: 35729 }))
-        .use(connect.static('app'))
-        .use(connect.directory('app'));
+        .use(connect.static('web'))
+        .use(connect.directory('web'))
 
     require('http').createServer(app)
         .listen(9000)
@@ -33,11 +46,12 @@ gulp.task('watch', ['connect'], function () {
     var server = $.livereload();
 
     gulp.watch([
-        'app/*.html',
-        'app/scripts/**/*.js',
+        'web/*.html',
+        'web/*.js',
     ]).on('change', function (file) {
         server.changed(file.path);
     });
 
     gulp.watch('app/scripts/**/*.js', ['scripts']);
+    gulp.watch('app/*.html', ['html']);
 });
