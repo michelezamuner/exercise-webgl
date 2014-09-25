@@ -14,11 +14,16 @@ gulp.task('scripts', function () {
         .pipe(gulp.dest('web/'));
 
     return gulp.src('app/scripts/main.js')
-        .pipe($.webpack({
+        /*.pipe($.webpack({
             module: { preLoaders: [ { loader: 'jshint-loader' } ] },
             jshint: { devel: true },
-            output: { filename: "bundle.js" }
-        }))
+            output: { filename: "bundle.js" },
+            resolve: {
+                modulesDirectories: ['./node_modules', './bower_components'],
+                packageFiles: ['./package.json', './bower.json']
+            }
+        }))*/
+        .pipe($.webpack(require('./webpack.config.js')))
         .pipe($.size())
         .pipe(gulp.dest('web/'));
 });

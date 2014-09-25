@@ -1,0 +1,13 @@
+{
+  "name": "study",
+  "version": "0.0.0",
+  "homepage": "https://github.com/mzamuner/exercise-webgl",
+  "authors": [
+    "Michele Zamuner <michelezamuner@gmail.com>"
+  ],
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "jquery": "~2.1.1"
+  }
+}
